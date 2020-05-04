@@ -1,5 +1,7 @@
 package com.fjhdream.tank;
 
+import sun.jvm.hotspot.memory.Space;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,6 +11,9 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
     int x = 200, y = 200;
+    private final int SPEED = 10;
+    Dir dir = Dir.DOWN;
+
     public  TankFrame() {
         setSize(800, 600);
         setResizable(false);
@@ -53,6 +58,7 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
+            setMainTankDir();
         }
 
         @Override
@@ -76,15 +82,47 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
+            setMainTankDir();
         }
+
+        private void setMainTankDir() {
+
+            if (!bL && !bU && !bR && !bD) {
+            } else {
+
+                if (bL) dir = Dir.LEFT;
+                if (bU) dir = Dir.UP;
+                if (bR) dir = Dir.RIGHT;
+                if (bD) dir = Dir.DOWN;
+
+            }
     }
+
+
+
+
+    }
+
 
     @Override
     public void paint(Graphics g) {
-//        System.out.println("paint");
         g.fillRect(x, y, 50, 50);
-//        x += 10;
-//        y += 10;
+        switch (dir) {
+            case UP:
+                y -= SPEED;
+                break;
+            case DOWN:
+                y+= SPEED;
+                break;
+            case LEFT:
+                x -= SPEED;
+                break;
+            case RIGHT:
+                x += SPEED;
+                break;
+            default:
+                break;
+        }
     }
 
 
