@@ -7,6 +7,9 @@ public class Tank {
     private Dir dir;
     private static final int SPEED = 5;
 
+    private static final int WIDTH = ResourceMgr.tankD.getWidth();
+    private static final int HEIGHT = ResourceMgr.tankD.getHeight();
+
     private boolean moving = false;
 
     private TankFrame tankFrame;
@@ -34,9 +37,22 @@ public class Tank {
 
     public void paint(Graphics g) {
         Color c = g.getColor();
-        g.setColor(Color.YELLOW);
-        g.fillRect(x, y, 50, 50);
-        g.setColor(c);
+        switch (dir) {
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR,x,y, null);
+                break;
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL,x,y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD,x,y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU,x,y, null);
+                break;
+            default:
+                break;
+        }
         move();
     }
 
