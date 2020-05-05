@@ -133,6 +133,12 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
 
+        Color c= g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹:"+bulletList.size(),10,60);
+        g.drawString("敌人:"+tankList.size(), 10, 80);
+        g.setColor(c);
+
         myTank.paint(g);
         for (int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).paint(g);
@@ -142,7 +148,7 @@ public class TankFrame extends Frame {
         }
         for (int i = 0; i < bulletList.size(); i++) {
             for (int j = 0; j < tankList.size(); j++) {
-                
+                bulletList.get(i).collidewith(tankList.get(j));
             }
         }
     }

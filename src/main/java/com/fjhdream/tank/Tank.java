@@ -3,12 +3,14 @@ package com.fjhdream.tank;
 import java.awt.*;
 
 public class Tank {
-    private int x, y;
+    private int x;
+    private int y;
     private Dir dir;
-    private static final int SPEED = 5;
+    private boolean aliving;
 
-    private static final int WIDTH = ResourceMgr.tankD.getWidth();
-    private static final int HEIGHT = ResourceMgr.tankD.getHeight();
+    private static final int SPEED = 5;
+    public static final int WIDTH = ResourceMgr.tankD.getWidth();
+    public static final int HEIGHT = ResourceMgr.tankD.getHeight();
 
     private boolean moving = false;
 
@@ -20,6 +22,7 @@ public class Tank {
         this.y = y;
         this.dir = dir;
         this.tankFrame = tankFrame;
+        this.aliving = true;
     }
 
     public Dir getDir() {
@@ -37,6 +40,11 @@ public class Tank {
 
     public void paint(Graphics g) {
         Color c = g.getColor();
+        if (!aliving) {
+            tankFrame.tankList.remove(this);
+            return;
+        }
+
         switch (dir) {
             case RIGHT:
                 g.drawImage(ResourceMgr.tankR,x,y, null);
@@ -80,5 +88,25 @@ public class Tank {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT;
         tankFrame.bulletList.add(new Bullet(bX, bY, this.dir, tankFrame));
+    }
+
+    public void die() {
+        this.aliving = false;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

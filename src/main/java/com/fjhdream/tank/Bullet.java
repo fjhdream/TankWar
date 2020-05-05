@@ -8,6 +8,7 @@ public class Bullet {
     private static final int SPEED = 20;
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
+
     private int x, y;
     private Dir dir;
 
@@ -72,6 +73,19 @@ public class Bullet {
         if ( x < 0 || y <0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT){
             this.live = false;
         }
+    }
+
+    public void collidewith(Tank tank) {
+        Rectangle rectangle1 = new Rectangle(this.x,this.y, WIDTH, HEIGHT);
+        Rectangle rectangle2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+        if (rectangle1.intersects(rectangle2)) {
+            this.die();
+            tank.die();
+        }
+    }
+
+    private void die() {
+        this.live = false;
     }
 
 }
