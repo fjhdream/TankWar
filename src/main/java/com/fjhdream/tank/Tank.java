@@ -12,7 +12,7 @@ public class Tank {
 
     private boolean moving = false;
 
-    private TankFrame tankFrame;
+    private final TankFrame tankFrame;
 
     public Tank(int x, int y, Dir dir,TankFrame tankFrame) {
         super();
@@ -77,6 +77,8 @@ public class Tank {
     }
 
     public void fire() {
-        tankFrame.bulletList.add(new Bullet(this.x, this.y, this.dir,tankFrame));
+        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH;
+        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT;
+        tankFrame.bulletList.add(new Bullet(bX, bY, this.dir, tankFrame));
     }
 }
