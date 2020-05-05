@@ -1,6 +1,7 @@
 package com.fjhdream.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Tank {
     private int x;
@@ -8,21 +9,25 @@ public class Tank {
     private Dir dir;
     private boolean aliving;
 
+    private Group group = Group.BAD;
+
     private static final int SPEED = 5;
     public static final int WIDTH = ResourceMgr.tankD.getWidth();
     public static final int HEIGHT = ResourceMgr.tankD.getHeight();
 
-    private boolean moving = false;
+    private boolean moving = true;
 
     private final TankFrame tankFrame;
+    private Random random = new Random();
 
-    public Tank(int x, int y, Dir dir,TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir,Group group,TankFrame tankFrame) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tankFrame = tankFrame;
         this.aliving = true;
+        this.group = group;
     }
 
     public Dir getDir() {
@@ -82,12 +87,15 @@ public class Tank {
             default:
                 break;
         }
+        if (random.nextInt(10) > 5) {
+            this.fire();
+        }
     }
 
     public void fire() {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT;
-        tankFrame.bulletList.add(new Bullet(bX, bY, this.dir, tankFrame));
+        tankFrame.bulletList.add(new Bullet(bX, bY, this.dir, this.group, tankFrame));
     }
 
     public void die() {
@@ -108,5 +116,13 @@ public class Tank {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }
