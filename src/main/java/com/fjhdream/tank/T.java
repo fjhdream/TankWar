@@ -4,7 +4,7 @@ package com.fjhdream.tank;
 public class T {
 
     public static void main(String[] args) throws InterruptedException {
-        TankFrame frame = new TankFrame();
+        TankFrame frame = TankFrame.INSTANCE;
 
         //初始化敌方坦克
         for (int i = 0; i < 5; i++) {

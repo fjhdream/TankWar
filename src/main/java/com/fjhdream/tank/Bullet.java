@@ -85,6 +85,7 @@ public class Bullet {
         if (rectangle1.intersects(rectangle2)) {
             this.die();
             tank.die();
+            TankFrame.INSTANCE.explodes.add(new Explode(tank.getX(), tank.getY()));
         }
         rectangle1 = null;
         rectangle2 = null;

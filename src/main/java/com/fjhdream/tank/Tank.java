@@ -45,6 +45,7 @@ public class Tank {
 
     public void paint(Graphics g) {
         Color c = g.getColor();
+        System.out.println();
         if (!aliving) {
             tankFrame.tankList.remove(this);
             return;
