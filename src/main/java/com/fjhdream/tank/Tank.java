@@ -13,13 +13,15 @@ public class Tank {
 
     private Rectangle tankRect = new Rectangle();
 
+
+    private FireStrategy fireStrategy = new DefaultFireStartegy();
     private static final int SPEED = 5;
     public static final int WIDTH = ResourceMgr.tankGoodU.getWidth();
     public static final int HEIGHT = ResourceMgr.tankBadU.getHeight();
 
     private boolean moving = true;
 
-    private final TankFrame tankFrame;
+    public final TankFrame tankFrame;
     private Random random = new Random();
 
     public Tank(int x, int y, Dir dir,Group group,TankFrame tankFrame) {
@@ -35,6 +37,19 @@ public class Tank {
         tankRect.y = y;
         tankRect.width = Tank.WIDTH;
         tankRect.height = Tank.HEIGHT;
+
+        if (this.group == Group.GOOD) {
+            String fs = (String) PropertyMgr.get("goodfs");
+            try {
+                this.fireStrategy = (FireStrategy) Class.forName(fs).newInstance();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Dir getDir() {
@@ -121,9 +136,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH;
-        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT;
-        tankFrame.bulletList.add(new Bullet(bX, bY, this.dir, this.group, tankFrame));
+        fireStrategy.fire(this);
     }
 
     public void die() {

@@ -5,6 +5,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class ResourceMgr {
+
+    private static class ResourceMgrHolder {
+        private static ResourceMgr Instance  = new ResourceMgr();
+    }
+
+    public ResourceMgr getInstance() {
+        return ResourceMgrHolder.Instance;
+    }
+    private ResourceMgr(){}
+
     public static BufferedImage tankGoodL, tankGoodU, tankGoodD, tankGoodR ;
     public static BufferedImage bulletL, bulletU, bulletD, bulletR;
 

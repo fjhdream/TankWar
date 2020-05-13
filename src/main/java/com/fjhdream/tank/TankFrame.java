@@ -1,6 +1,5 @@
 package com.fjhdream.tank;
 
-import sun.jvm.hotspot.memory.Space;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -83,7 +82,7 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = false;
                     break;
-                case KeyEvent.VK_CONTROL:
+                case KeyEvent.VK_SPACE:
                     myTank.fire();
                     break;
                 default:
