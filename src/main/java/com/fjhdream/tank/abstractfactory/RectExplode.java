@@ -1,10 +1,12 @@
-package com.fjhdream.tank;
+package com.fjhdream.tank.abstractfactory;
 
-import com.fjhdream.tank.abstractfactory.BaseExplode;
+import com.fjhdream.tank.Audio;
+import com.fjhdream.tank.ResourceMgr;
+import com.fjhdream.tank.TankFrame;
 
-import java.awt.Graphics;
+import java.awt.*;
 
-public class Explode extends BaseExplode {
+public class RectExplode  extends BaseExplode{
     public static int WIDTH = ResourceMgr.explodes[0].getWidth();
     public static int HEIGHT = ResourceMgr.explodes[0].getHeight();
 
@@ -15,7 +17,7 @@ public class Explode extends BaseExplode {
 
     private int step = 0;
 
-    public Explode(int x, int y, TankFrame tankFrame) {
+    public RectExplode(int x, int y, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.tankFrame = tankFrame;
@@ -28,14 +30,14 @@ public class Explode extends BaseExplode {
     @Override
     public void paint(Graphics g) {
 
-        g.drawImage(ResourceMgr.explodes[step++], x, y, null);
+        Color c= g.getColor();
+        g.setColor(Color.RED);
+        g.fillRect(x,y,10*step,10*step);
+        step++;
+
+        //g.drawImage(ResourceMgr.explodes[step++], x, y, null);
 
         if(step >= ResourceMgr.explodes.length)
             tankFrame.explodes.remove(this);
     }
-
-
-
 }
-
-

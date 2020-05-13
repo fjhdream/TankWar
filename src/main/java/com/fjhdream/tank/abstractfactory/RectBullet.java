@@ -1,13 +1,11 @@
-package com.fjhdream.tank;
+package com.fjhdream.tank.abstractfactory;
 
-import com.fjhdream.tank.abstractfactory.BaseBullet;
-import com.fjhdream.tank.abstractfactory.BaseTank;
+import com.fjhdream.tank.*;
 
 import java.awt.*;
 
 
-
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet {
     private static final int SPEED = 20;
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
@@ -22,7 +20,7 @@ public class Bullet extends BaseBullet {
 
     private boolean live = true;
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -30,8 +28,8 @@ public class Bullet extends BaseBullet {
         this.group = group;
         bulletRect.x = x;
         bulletRect.y = y;
-        bulletRect.width = Tank.WIDTH;
-        bulletRect.height = Tank.HEIGHT;
+        bulletRect.width = RectTank.WIDTH;
+        bulletRect.height = RectTank.HEIGHT;
 
         tankFrame.bulletList.add(this);
     }
@@ -42,22 +40,30 @@ public class Bullet extends BaseBullet {
             tankFrame.bulletList.remove(this);
         }
 
+        Color c = g.getColor();
+        g.setColor(Color.cyan);
+
         switch (dir) {
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR,x,y, null);
+                g.fillRect(x,y,20,20);
+                //g.drawImage(ResourceMgr.bulletR,x,y, null);
                 break;
             case LEFT:
-                g.drawImage(ResourceMgr.bulletL,x,y, null);
+                g.fillRect(x,y,20,20);
+//                g.drawImage(ResourceMgr.bulletL,x,y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD,x,y, null);
+                g.fillRect(x,y,20,20);
+//                g.drawImage(ResourceMgr.bulletD,x,y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletU,x,y, null);
+                g.fillRect(x,y,20,20);
+//                g.drawImage(ResourceMgr.bulletU,x,y, null);
                 break;
             default:
                 break;
         }
+        g.setColor(c);
 
         move();
         bulletRect.x = this.x;
@@ -90,16 +96,15 @@ public class Bullet extends BaseBullet {
         }
     }
 
-    @Override
     public void collidewith(BaseTank tank) {
         if (this.group == tank.getGroup()) return;
         Rectangle rectangle1 = new Rectangle(this.x,this.y, WIDTH, HEIGHT);
-        Rectangle rectangle2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+        Rectangle rectangle2 = new Rectangle(tank.getX(), tank.getY(), RectTank.WIDTH, RectTank.HEIGHT);
         if (rectangle1.intersects(rectangle2)) {
             this.die();
             tank.die();
-            int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
-            int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
+            int eX = tank.getX() + RectTank.WIDTH/2 - Explode.WIDTH/2;
+            int eY = tank.getY() + RectTank.HEIGHT/2 - Explode.HEIGHT/2;
             tankFrame.explodes.add(tankFrame.gameFactory.createExplode(x, y, tankFrame));
         }
         rectangle1 = null;

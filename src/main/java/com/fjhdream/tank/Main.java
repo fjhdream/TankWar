@@ -8,7 +8,7 @@ public class Main {
 
         //初始化敌方坦克
         for (int i = 0; i < 5; i++) {
-            frame.tankList.add(new Tank(200+i*100,200, Dir.LEFT, Group.BAD, frame));
+            frame.tankList.add(frame.gameFactory.createTank(200+i*100,200, Dir.LEFT, Group.BAD, frame));
         }
         while (true) {
             Thread.sleep(50);

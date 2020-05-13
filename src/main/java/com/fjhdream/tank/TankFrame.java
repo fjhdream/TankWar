@@ -1,6 +1,8 @@
 package com.fjhdream.tank;
 
 
+import com.fjhdream.tank.abstractfactory.*;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -11,12 +13,15 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(200,400, Dir.DOWN, Group.GOOD,this);
-   List<Bullet> bulletList = new ArrayList<>();
-   List<Tank> tankList = new ArrayList<>();
-   List<Explode> explodes = new ArrayList<>();
 
-   static  final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+   public List<BaseBullet> bulletList = new ArrayList<>();
+   public List<BaseTank> tankList = new ArrayList<>();
+   public List<BaseExplode> explodes = new ArrayList<>();
+
+   public GameFactory gameFactory = new DefaultFactory();
+   BaseTank myTank = gameFactory.createTank(200,400, Dir.DOWN, Group.GOOD,this);
+
+   public static  final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     public  TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
